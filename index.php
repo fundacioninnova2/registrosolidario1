@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
   <head>
     <style type="text/css">
@@ -50,24 +50,34 @@
                 </div>
                 <div class="form-group"  style="margin-top:15px;margin-bottom:15px;">
                 <label for="localidad" class="col-lg-4 control-label">Seleccionar localidad del aporte</label>
-                    <label for="ciudad" class="col-lg-4 control-label"></label>
+                    <label for="region" class="col-lg-4 control-label"></label>
                     <div  class="col-lg-5">
-                    <select id ="region" class=" form-control" >                        
+                    <select id="region" class=" form-control" onchange="cargaprovincia()" >
+                        <!--Regiones-->
                         <option id="-1">SELECCIONAR REGIÓN</option>
+                        <?php
+                        require_once ('include/conn.php');
+                        $mysqli = getConn();
+                        $query = "SELECT * FROM regiones";
+                        $resultado=$mysqli->query($query);
+                        while ($rows = $resultado->fetch_assoc()) {
+                        ?>
+                            <option value="<?php echo $rows['region_id']?>"><?php echo $rows['region_nombre']?></option>
+
+                        <?php }?>
+                    </select>
+                    </div>
+                    <label for="provincia" class="col-lg-4 control-label" ></label>
+                    <div  class="col-lg-5">
+                    <select id ="provincia" class=" form-control" onchange="cargaciudad()">
+                        <option value="-1">SELECCIONAR PROVINCIA</option>
                     </select>
                         
                     </div>
-                    <label for="ciudad" class="col-lg-4 control-label"></label>
+                    <label for="ciudad" class="col-lg-4 control-label" ></label>
                     <div  class="col-lg-5">
-                    <select id ="provincia" class=" form-control">                       
-                        <option id="-1">SELECCIONAR PROVINCIA</option>
-                    </select>
-                        
-                    </div>
-                    <label for="ciudad" class="col-lg-4 control-label"></label>
-                    <div  class="col-lg-5">
-                    <select id ="provincia" class=" form-control">                       
-                        <option id="-1">SELECCIONAR CIUDAD</option>
+                    <select id="ciudad" class=" form-control" onchange="cargacoord()">
+                        <option id="-1">SELECCIONAR COMUNAS</option>
                     </select>
                         
                     </div>
@@ -231,7 +241,7 @@
 
    
    
-   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4fIs95SFDirLad0dyx99YX-Ec82jOpHs&libraries=places"></script>
+   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqLy2-132nvQ9gph8Xq_O1CCNV0v_2mik&libraries=places"></script>
    
    <script type="text/javascript" src="js/jquery.js" ></script>
    <script type="text/javascript" src="js/bootstrap.js" ></script>
